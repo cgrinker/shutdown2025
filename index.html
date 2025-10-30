@@ -4,6 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ACA Subsidy Cliff Risk Assessment</title>
+    <meta name="description" content="Visualize and calculate the premium shock if enhanced ACA premium tax credits expire in 2026. Explore age, income, and family size impacts." />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="ACA Subsidy Cliff Risk Assessment" />
+    <meta property="og:description" content="Visualize and calculate the premium shock if enhanced ACA premium tax credits expire in 2026. Explore age, income, and family size impacts." />
+    <meta property="og:url" content="https://cgrinker.github.io/shutdown2025/" />
+    <meta property="og:image" content="https://cgrinker.github.io/shutdown2025/static/og.png" />
+    <meta property="og:image:alt" content="Preview of the ACA Subsidy Cliff Risk Assessment chart" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="ACA Subsidy Cliff Risk Assessment" />
+    <meta name="twitter:description" content="Visualize and calculate the premium shock if enhanced ACA premium tax credits expire in 2026. Explore age, income, and family size impacts." />
+    <meta name="twitter:image" content="https://cgrinker.github.io/shutdown2025/static/og.png" />
+    <meta name="twitter:image:alt" content="Preview of the ACA Subsidy Cliff Risk Assessment chart" />
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Chart.js CDN for visualization -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
@@ -114,8 +126,8 @@
                     <p class="text-xs text-slate-400">Uses 2024 FPL guidelines for 2025 coverage.</p>
                 </div>
                 <div class="space-y-2">
-                    <label for="age" class="text-sm font-semibold uppercase tracking-[0.2em] text-slate-300">Oldest Person's Age (20-64)</label>
-                    <input type="number" id="age" placeholder="e.g., 55" min="20" max="64" value="55" oninput="calculateImpact()" class="w-full rounded-2xl border border-white/10 bg-slate-900/70 px-4 py-3 text-base text-white shadow-inner shadow-black/30 transition focus:border-sky-400/70 focus:outline-none focus:ring-2 focus:ring-sky-400/40" />
+                    <label for="age" class="text-sm font-semibold uppercase tracking-[0.2em] text-slate-300">Oldest Person's Age (20-65)</label>
+                    <input type="number" id="age" placeholder="e.g., 55" min="20" max="65" value="55" oninput="calculateImpact()" class="w-full rounded-2xl border border-white/10 bg-slate-900/70 px-4 py-3 text-base text-white shadow-inner shadow-black/30 transition focus:border-sky-400/70 focus:outline-none focus:ring-2 focus:ring-sky-400/40" />
                     <p class="text-xs text-slate-400">Premiums are age-rated.</p>
                 </div>
             </div>
@@ -273,17 +285,18 @@
             'rgb(13, 148, 136)'     // Teal - Tailwind Teal 600
         ];
 
-        // We will generate chart data points for ages 20 to 64 to show a smooth curve
-        const labels = Array.from({length: 45}, (_, i) => 20 + i);
+        // We will generate chart data points for ages 26 to 65 to focus on independent coverage years
+        const ages = Array.from({ length: 40 }, (_, i) => 26 + i);
 
         const datasets = INCOME_LEVELS.map((income, index) => {
-            const data = labels.map(age => {
-                return calculatePremiumIncrease(income, familySize, age);
-            });
+            const data = ages.map(age => ({
+                x: age,
+                y: calculatePremiumIncrease(income, familySize, age)
+            }));
 
             return {
                 label: currencyFormatter.format(income),
-                data: data,
+                data,
                 borderColor: colors[index % colors.length], 
                 backgroundColor: colors[index % colors.length] + '33',
                 fill: false,
@@ -293,7 +306,7 @@
             };
         });
 
-        return { labels, datasets };
+        return { datasets };
     }
 
 
@@ -308,7 +321,6 @@
         };
         
         if (impactChart) {
-            impactChart.data.labels = chartData.labels;
             impactChart.data.datasets = chartData.datasets;
             impactChart.update();
         } else {
@@ -317,6 +329,7 @@
                 data: chartData,
                 options: {
                     responsive: true,
+                    parsing: { xAxisKey: 'x', yAxisKey: 'y' },
                     plugins: {
                         legend: { position: 'top' },
                         title: { display: false },
@@ -333,13 +346,14 @@
                     },
                     scales: {
                         x: {
+                            type: 'linear',
                             title: { display: true, text: 'Age of Oldest Member' },
-                            min: 20,
-                            max: 64,
-                            ticks: { 
+                            min: 26,
+                            max: 65,
+                            ticks: {
                                 stepSize: 5,
-                                callback: function(value, index, values) {
-                                    if (value % 2 === 0 || value === 64) return value;
+                                callback: function(value) {
+                                    if (value === 26 || value % 5 === 0 || value === 65) return value;
                                 }
                             }
                         },
@@ -371,8 +385,8 @@
         resultsDiv.innerHTML = '';
         keyDataDiv.innerHTML = '';
 
-        if (isNaN(income) || isNaN(familySize) || isNaN(age) || income <= 0 || familySize <= 0 || age < 20 || age > 64) {
-            resultsDiv.innerHTML = '<p class="text-slate-600 text-lg">Please enter valid values for Income, Family Size (1-8), and Age (20-64).</p>';
+        if (isNaN(income) || isNaN(familySize) || isNaN(age) || income <= 0 || familySize <= 0 || age < 20 || age > 65) {
+            resultsDiv.innerHTML = '<p class="text-slate-600 text-lg">Please enter valid values for Income, Family Size (1-8), and Age (20-65).</p>';
             return;
         }
         
