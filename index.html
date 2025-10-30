@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACA Subsidy Cliff Risk Assessment</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js CDN for visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .bg-grid {
+            background-image: radial-gradient(circle at 1px 1px, rgba(148, 163, 184, 0.12) 1px, transparent 0);
+            background-size: 40px 40px;
+        }
+        @media (min-width: 1024px) {
+            .bg-grid {
+                background-size: 48px 48px;
+            }
+        }
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type="number"] {
+            appearance: textfield;
+            -moz-appearance: textfield;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 antialiased">
+
+<div class="relative isolate overflow-hidden">
+    <div class="pointer-events-none absolute inset-0 -z-10">
+        <div class="bg-grid absolute inset-0 opacity-60"></div>
+        <div class="absolute left-1/2 top-[-18rem] h-[40rem] w-[40rem] -translate-x-1/2 rounded-full bg-gradient-to-br from-sky-500/40 via-emerald-400/20 to-transparent blur-3xl"></div>
+        <div class="absolute right-[-10rem] top-[35%] h-[32rem] w-[32rem] rounded-full bg-gradient-to-bl from-indigo-500/30 via-purple-500/20 to-transparent blur-3xl"></div>
+    </div>
+
+    <main class="relative mx-auto flex min-h-screen max-w-6xl flex-col gap-16 px-6 py-16 lg:px-12 lg:py-24">
+        <header class="rounded-[32px] border border-white/10 bg-slate-900/50 p-10 shadow-2xl backdrop-blur-sm lg:p-16">
+            <div class="space-y-8">
+                <h1 class="[text-wrap:balance] text-center text-3xl font-black tracking-tight text-white md:text-4xl lg:text-5xl">
+                    Assessing the Impact of the Expiring Enhanced ACA Subsidies
+                </h1>
+                <div class="rounded-3xl border border-teal-300/40 bg-gradient-to-br from-teal-500/20 via-teal-600/10 to-slate-900 p-8 shadow-lg shadow-teal-500/10">
+                    <h2 class="text-xl font-semibold text-teal-200">Key Policy Update: PTC Sunset Date</h2>
+                    <p class="mt-4 text-lg text-slate-100/90">The <strong>Enhanced Premium Tax Credits (PTC)</strong>, established under the American Rescue Plan Act (ARPA) and extended by the Inflation Reduction Act (IRA), are currently scheduled to <strong>expire on December 31, 2025</strong>.</p>
+                    <p class="mt-4 text-lg text-slate-100/80">If Congress does not renew these provisions, the eligibility rules and contribution requirements for health insurance purchased through the Marketplace will revert to less generous, pre-ARPA levels.</p>
+                </div>
+            </div>
+        </header>
+
+        <section class="space-y-10">
+            <h2 class="text-pretty text-3xl font-semibold text-white">Projected Consequences of Expiration (Starting 2026)</h2>
+            <div class="grid gap-6 lg:grid-cols-3">
+                <div class="group flex flex-col gap-3 rounded-3xl border border-white/10 bg-slate-900/40 p-7 shadow-xl shadow-red-500/5 transition duration-300 hover:-translate-y-1 hover:border-red-400/30 hover:shadow-red-500/20">
+                    <p class="text-sm font-semibold uppercase tracking-[0.2em] text-red-300/80">1. Reinstatement of the 400% FPL Eligibility Cliff</p>
+                    <p class="leading-relaxed text-slate-100/80">The <strong>income cap for PTC eligibility</strong> (400% of the FPL) will be restored. Marketplace enrollees with incomes even slightly above this threshold will lose their entire tax credit, forcing them to pay the full, unsubsidized premium cost. This affects individuals who previously gained coverage due to the cap removal [<a href="#source1" class="font-semibold text-sky-300 underline decoration-sky-400/60 decoration-2 underline-offset-4 transition hover:text-sky-200" target="_blank" rel="noopener noreferrer">Source 1</a>, <a href="#source2" class="font-semibold text-sky-300 underline decoration-sky-400/60 decoration-2 underline-offset-4 transition hover:text-sky-200" target="_blank" rel="noopener noreferrer">2</a>].</p>
+                    <p class="leading-relaxed text-slate-100/70">Research indicates that <strong>older enrollees</strong> at these income levels face the largest financial shocks, as their baseline premiums are substantially higher than younger enrollees (a 3:1 age-rating ratio is common in most states) [<a href="#source2" class="font-semibold text-sky-300 underline decoration-sky-400/60 decoration-2 underline-offset-4 transition hover:text-sky-200" target="_blank" rel="noopener noreferrer">Source 2</a>, <a href="#source3" class="font-semibold text-sky-300 underline decoration-sky-400/60 decoration-2 underline-offset-4 transition hover:text-sky-200" target="_blank" rel="noopener noreferrer">3</a>].</p>
+                </div>
+                <div class="group flex flex-col gap-3 rounded-3xl border border-white/10 bg-slate-900/40 p-7 shadow-xl shadow-amber-500/5 transition duration-300 hover:-translate-y-1 hover:border-amber-300/30 hover:shadow-amber-500/20">
+                    <p class="text-sm font-semibold uppercase tracking-[0.2em] text-amber-200/80">2. Reduced Financial Assistance Across All Subsidized Tiers</p>
+                    <p class="leading-relaxed text-slate-100/80">For all eligible enrollees (below 400% FPL), the required contribution toward the benchmark plan will rise. For instance, the maximum contribution percentage for those near 400% FPL increases from the current 8.5% to 9.96% of income [<a href="#source2" class="font-semibold text-sky-300 underline decoration-sky-400/60 decoration-2 underline-offset-4 transition hover:text-sky-200" target="_blank" rel="noopener noreferrer">Source 2</a>]. This increase in required contribution will reduce the subsidy amount for all affected households.</p>
+                </div>
+                <div class="group flex flex-col gap-3 rounded-3xl border border-white/10 bg-slate-900/40 p-7 shadow-xl shadow-blue-500/5 transition duration-300 hover:-translate-y-1 hover:border-blue-400/30 hover:shadow-blue-500/20">
+                    <p class="text-sm font-semibold uppercase tracking-[0.2em] text-blue-200/80">3. Estimated Coverage and Fiscal Impact</p>
+                    <ul class="list-disc space-y-2 pl-5 text-slate-100/80">
+                        <li>Out-of-pocket premium payments are projected to <strong>more than double</strong> for subsidized enrollees, increasing by an average of over 100% [<a href="#source2" class="font-semibold text-sky-300 underline decoration-sky-400/60 decoration-2 underline-offset-4 transition hover:text-sky-200" target="_blank" rel="noopener noreferrer">Source 2</a>].</li>
+                        <li>The Congressional Budget Office (CBO) estimates that <strong>permanently extending the enhanced PTC structure</strong> would increase federal deficits by approximately <strong>$350 billion</strong> over the 2026–2035 period [<a href="#source3" class="font-semibold text-sky-300 underline decoration-sky-400/60 decoration-2 underline-offset-4 transition hover:text-sky-200" target="_blank" rel="noopener noreferrer">Source 3</a>].</li>
+                        <li>CBO also projects that permanently extending the credit would increase the number of people with health insurance by approximately <strong>3.8 million</strong> in 2035 [<a href="#source3" class="font-semibold text-sky-300 underline decoration-sky-400/60 decoration-2 underline-offset-4 transition hover:text-sky-200" target="_blank" rel="noopener noreferrer">Source 3</a>].</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    <section class="rounded-[32px] border border-white/10 bg-slate-900/50 p-10 shadow-2xl shadow-sky-500/10 backdrop-blur-sm">
+            <div class="space-y-8">
+                <h2 class="text-2xl font-semibold text-white">Financial Impact Zone: Premium Increase by Age (Shock Wave)</h2>
+                <div class="rounded-3xl border border-white/10 bg-slate-900/60 p-6">
+                    <canvas id="impactChart"></canvas>
+                </div>
+                <p class="text-center text-xs text-slate-300/80">This chart illustrates the potential annual premium increase (loss of subsidy) for <strong>fixed high-income levels</strong> (single person) across the entire eligible age range. The steep rise shows the disproportionate financial shock faced by older enrollees at high incomes when the 400% FPL subsidy cliff returns.</p>
+
+                <div class="space-y-4 rounded-3xl border border-white/10 bg-slate-900/60 p-6">
+                    <h3 class="text-lg font-semibold text-white">Analysis of the 'Shock Wave' Chart</h3>
+                    <p class="text-sm leading-relaxed text-slate-100/80">This chart visualizes the financial impact for different income levels. Each colored line represents a fixed income, showing how the loss of the subsidy (the premium increase) changes as a person with that income gets older.</p>
+                    <ul class="list-disc space-y-2 pl-5 text-sm leading-relaxed text-slate-100/70">
+                        <li><strong>The Left Side (Younger Ages):</strong> The lines are at or near $0. This is because at younger ages, the benchmark premium is low. For a high-income person, this low premium is already less than 8.5% of their income. They receive no subsidy in 2025, so they lose no subsidy in 2026.</li>
+                        <li><strong>The Peak (Older Ages):</strong> The lines rise steeply with age. This is because as the enrollee gets older, their premium cost increases significantly. This high premium is *more* than 8.5% of their income, meaning they *are* receiving a large subsidy in 2025. When the 400% FPL cliff returns, this subsidy is lost entirely, resulting in a massive premium increase.</li>
+                        <li><strong>The "Ceiling" Lines:</strong> The highest income lines (e.g., $186k, $205k) remain near $0. This is because these incomes are high enough to pay the full premium, even for a 64-year-old, without hitting the 8.5% cap. They are outside the "impact zone" because they receive little to no subsidy to begin with.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    <section class="space-y-8 rounded-[32px] border border-white/10 bg-slate-900/50 p-10 shadow-2xl shadow-emerald-500/10 backdrop-blur-sm">
+            <div class="space-y-4">
+                <h2 class="text-3xl font-semibold text-white">Test Your Personal Impact</h2>
+                <p class="max-w-3xl text-lg leading-relaxed text-slate-100/80">Use the calculator below to see your estimated annual premium increase based on the loss of the tax credit alone (it does not account for general premium inflation or rising gross premiums).</p>
+            </div>
+
+            <div id="input-form" class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                <div class="space-y-2">
+                    <label for="income" class="text-sm font-semibold uppercase tracking-[0.2em] text-slate-300">Household Income (MAGI)</label>
+                    <input type="number" id="income" placeholder="e.g., 75000" min="1" value="75000" oninput="calculateImpact()" class="w-full rounded-2xl border border-white/10 bg-slate-900/70 px-4 py-3 text-base text-white shadow-inner shadow-black/30 transition focus:border-sky-400/70 focus:outline-none focus:ring-2 focus:ring-sky-400/40" />
+                </div>
+                <div class="space-y-2">
+                    <label for="familySize" class="text-sm font-semibold uppercase tracking-[0.2em] text-slate-300">Family Size</label>
+                    <input type="number" id="familySize" placeholder="e.g., 2" min="1" max="8" value="2" oninput="calculateImpact()" class="w-full rounded-2xl border border-white/10 bg-slate-900/70 px-4 py-3 text-base text-white shadow-inner shadow-black/30 transition focus:border-sky-400/70 focus:outline-none focus:ring-2 focus:ring-sky-400/40" />
+                    <p class="text-xs text-slate-400">Uses 2024 FPL guidelines for 2025 coverage.</p>
+                </div>
+                <div class="space-y-2">
+                    <label for="age" class="text-sm font-semibold uppercase tracking-[0.2em] text-slate-300">Oldest Person's Age (20-64)</label>
+                    <input type="number" id="age" placeholder="e.g., 55" min="20" max="64" value="55" oninput="calculateImpact()" class="w-full rounded-2xl border border-white/10 bg-slate-900/70 px-4 py-3 text-base text-white shadow-inner shadow-black/30 transition focus:border-sky-400/70 focus:outline-none focus:ring-2 focus:ring-sky-400/40" />
+                    <p class="text-xs text-slate-400">Premiums are age-rated.</p>
+                </div>
+            </div>
+
+            <div class="rounded-3xl border border-white/10 bg-slate-900/60 p-8 shadow-lg shadow-sky-500/10">
+                <div id="results" class="text-center">
+                    <p class="text-lg text-slate-300">Enter your information above to see the estimated change.</p>
+                </div>
+                <div class="mt-8 border-t border-white/10 pt-6">
+                    <p class="text-sm font-semibold uppercase tracking-[0.2em] text-slate-300">Key Data for Calculation:</p>
+                    <div id="key-data" class="mt-4 grid gap-6 text-sm text-slate-100/80 md:grid-cols-2">
+                        <!-- Key data injected here by JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    <footer class="rounded-[28px] border border-white/10 bg-slate-900/40 p-8 text-sm text-slate-300/80 shadow-lg">
+            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Sources Cited:</p>
+            <div class="mt-4 space-y-3">
+                <p id="source1">[Source 1] <a href="httpshttps://www.kff.org/affordable-care-act/issue-brief/aca-marketplace-premium-payments-would-more-than-double-on-average-next-year-if-enhanced-premium-tax-credits-expire/" target="_blank" rel="noopener noreferrer" class="text-sky-300 underline decoration-sky-400/60 decoration-2 underline-offset-4 transition hover:text-sky-200">KFF. <em>ACA Marketplace Premium Payments Would More than Double on Average Next Year if Enhanced Premium Tax Credits Expire</em> (Sept 2025).</a></p>
+                <p id="source2">[Source 2] <a href="https://www.urban.org/research/publication/48-million-people-will-lose-coverage-2026-if-enhanced-premium-tax-credits" target="_blank" rel="noopener noreferrer" class="text-sky-300 underline decoration-sky-400/60 decoration-2 underline-offset-4 transition hover:text-sky-200">Urban Institute. <em>4.8 Million People Will Lose Coverage in 2026 If Enhanced Premium Tax Credits Expire</em> (Sept 2025).</a></p>
+                <p id="source3">[Source 3] <a href="https://www.cbo.gov/publication/61734" target="_blank" rel="noopener noreferrer" class="text-sky-300 underline decoration-sky-400/60 decoration-2 underline-offset-4 transition hover:text-sky-200">Congressional Budget Office (CBO). <em>The Estimated Effects of Enacting Selected Health Coverage Policies on the Federal Budget and on the Number of People With Health Insurance</em> (Sept 2025).</a></p>
+            </div>
+        </footer>
+    </main>
+</div>
+
+<script>
+    // Global chart variable
+    let impactChart;
+
+    // --- Data Tables ---
+    // 2024 FPL Guidelines for the 48 contiguous states (used for 2025 Coverage Year eligibility)
+    const FPL_2025_GUIDELINES = {
+        1: 15060, 2: 20440, 3: 25820, 4: 31200, 5: 36580, 6: 41960, 7: 47340, 8: 52720,
+    };
+    // Benchmark Silver Plan Premiums (Annualized)
+    const BENCHMARK_PREMIUMS = {
+        20: 5652, 25: 5856, 30: 6624, 35: 7128, 40: 7452, 45: 8424, 50: 10416, 55: 13008, 60: 15828, 64: 17496,
+    };
+    // 2025 (Enhanced PTC, ARPA/IRA) - Max 8.5%
+    const PTC_RATES_2025 = [
+        { min_fpl: 0, max_fpl: 150, max_rate: 0.0000 }, 
+        { min_fpl: 150, max_fpl: 200, max_rate: 0.0200 }, 
+        { min_fpl: 200, max_fpl: 250, max_rate: 0.0400 }, 
+        { min_fpl: 250, max_fpl: 300, max_rate: 0.0600 }, 
+        { min_fpl: 300, max_fpl: 400, max_rate: 0.0850 }, 
+        { min_fpl: 400, max_fpl: Infinity, max_rate: 0.0850 }, 
+    ];
+    // 2026 (Standard PTC, Post-Expiration) - Cliff returns at 400% FPL
+    const PTC_RATES_2026 = [
+        { min_fpl: 0, max_fpl: 133, max_rate: 0.0210 },  
+        { min_fpl: 133, max_fpl: 150, max_rate: 0.0419 },  
+        { min_fpl: 150, max_fpl: 200, max_rate: 0.0660 }, 
+        { min_fpl: 200, max_fpl: 250, max_rate: 0.0844 }, 
+        { min_fpl: 250, max_fpl: 300, max_rate: 0.0996 },
+        { min_fpl: 300, max_fpl: 400, max_rate: 0.0996 },
+        { min_fpl: 400, max_fpl: Infinity, max_rate: Infinity }, // Subsidy Cliff returns
+    ];
+    
+    // Currency formatter function (used globally)
+    const currencyFormatter = new Intl.NumberFormat('en-US', {
+        style: 'currency', currency: 'USD', minimumFractionDigits: 0, maximumFractionDigits: 0,
+    });
+
+    // --- Core Utility Functions ---
+    function getFPL100(familySize) {
+        if (familySize < 1) return 0;
+        if (familySize <= 8) return FPL_2025_GUIDELINES[familySize] || FPL_2025_GUIDELINES[1];
+        return FPL_2025_GUIDELINES[8] + (familySize - 8) * 5380;
+    }
+
+    function calculateFPLPercentage(income, familySize) {
+        const fpl_100 = getFPL100(familySize);
+        if (fpl_100 <= 0) return 0;
+        return (income / fpl_100) * 100;
+    }
+
+    function getBenchmarkPremium(age) {
+        const ages = Object.keys(BENCHMARK_PREMIUMS).map(Number).sort((a, b) => a - b);
+        if (age <= ages[0]) return BENCHMARK_PREMIUMS[ages[0]];
+        if (age >= ages[ages.length - 1]) return BENCHMARK_PREMIUMS[ages[ages.length - 1]];
+
+        for (let i = 0; i < ages.length - 1; i++) {
+            const age1 = ages[i];
+            const age2 = ages[i + 1];
+            if (age >= age1 && age <= age2) {
+                const premium1 = BENCHMARK_PREMIUMS[age1];
+                const premium2 = BENCHMARK_PREMIUMS[age2];
+                // Linear interpolation - used for smooth chart lines
+                return premium1 + (age - age1) * (premium2 - premium1) / (age2 - age1);
+            }
+        }
+        return 0; // Fallback
+    }
+
+    function getAnnualRequiredContribution(income, fplPercent, annualPremium, rates, is2026) {
+        let maxRate;
+        let isEligible = true;
+
+        const rateBand = rates.find(band => fplPercent >= band.min_fpl && fplPercent < band.max_fpl);
+        
+        if (rateBand) {
+            maxRate = rateBand.max_rate;
+        } else {
+            maxRate = rates[rates.length - 1].max_rate; 
+        }
+
+        if (is2026 && fplPercent >= 400 && maxRate === Infinity) {
+            // Over 400% FPL in 2026, subsidy is lost (the cliff)
+            isEligible = false;
+        }
+
+        if (!isEligible) {
+            return annualPremium; // Pay full, unsubsidized premium
+        }
+        
+        let contributionPercent = maxRate;
+        let requiredContribution = income * contributionPercent;
+        
+        return Math.min(requiredContribution, annualPremium);
+    }
+    
+    function calculatePremiumIncrease(income, familySize, age) {
+        const fplPercent = calculateFPLPercentage(income, familySize);
+        const annualBenchmarkPremium = getBenchmarkPremium(age);
+        
+        const netPremium2025 = getAnnualRequiredContribution(income, fplPercent, annualBenchmarkPremium, PTC_RATES_2025, false);
+        const netPremium2026 = getAnnualRequiredContribution(income, fplPercent, annualBenchmarkPremium, PTC_RATES_2026, true);
+        
+        return Math.max(0, netPremium2026 - netPremium2025); 
+    }
+
+    // --- Chart Generation Functions ---
+    function generateChartData() {
+        const familySize = 1; 
+        
+        // The specific income values requested by the user, which are the Zero Subsidy Incomes for ages 20 through 64.
+        const INCOME_LEVELS = [
+            66494, 68894, 77929, 83859, 87671, 99106, 122541, 153035, 186212, 205835
+        ];
+        
+        // Define colors for the 10 lines
+        const colors = [
+            'rgb(239, 68, 68)',    // Red (Low Income, High Impact) - Tailwind Red 500
+            'rgb(16, 185, 129)',   // Green - Tailwind Emerald 500
+            'rgb(245, 158, 11)',   // Yellow/Amber - Tailwind Amber 500
+            'rgb(59, 130, 246)',   // Blue - Tailwind Blue 500
+            'rgb(234, 88, 12)',    // Orange - Tailwind Orange 600
+            'rgb(168, 85, 247)',   // Purple - Tailwind Violet 400
+            'rgb(6, 182, 212)',    // Cyan - Tailwind Cyan 500
+            'rgb(236, 72, 153)',   // Pink - Tailwind Pink 500
+            'rgb(101, 163, 13)',   // Olive - Tailwind Lime 600
+            'rgb(13, 148, 136)'     // Teal - Tailwind Teal 600
+        ];
+
+        // We will generate chart data points for ages 20 to 64 to show a smooth curve
+        const labels = Array.from({length: 45}, (_, i) => 20 + i);
+
+        const datasets = INCOME_LEVELS.map((income, index) => {
+            const data = labels.map(age => {
+                return calculatePremiumIncrease(income, familySize, age);
+            });
+
+            return {
+                label: currencyFormatter.format(income),
+                data: data,
+                borderColor: colors[index % colors.length], 
+                backgroundColor: colors[index % colors.length] + '33',
+                fill: false,
+                tension: 0.3, 
+                pointRadius: 1, 
+                borderWidth: 2
+            };
+        });
+
+        return { labels, datasets };
+    }
+
+
+    // Draws or updates the Chart.js visualization
+    function updateChart(chartData) {
+        const ctx = document.getElementById('impactChart').getContext('2d');
+
+        const currencyTooltip = (value) => {
+            return new Intl.NumberFormat('en-US', {
+                style: 'currency', currency: 'USD', minimumFractionDigits: 0, maximumFractionDigits: 0,
+            }).format(value);
+        };
+        
+        if (impactChart) {
+            impactChart.data.labels = chartData.labels;
+            impactChart.data.datasets = chartData.datasets;
+            impactChart.update();
+        } else {
+            impactChart = new Chart(ctx, {
+                type: 'line',
+                data: chartData,
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { position: 'top' },
+                        title: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) { label += ' Income: '; }
+                                    label += currencyTooltip(context.parsed.y);
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: { display: true, text: 'Age of Oldest Member' },
+                            min: 20,
+                            max: 64,
+                            ticks: { 
+                                stepSize: 5,
+                                callback: function(value, index, values) {
+                                    if (value % 2 === 0 || value === 64) return value;
+                                }
+                            }
+                        },
+                        y: {
+                            title: { display: true, text: 'Estimated Annual Premium Increase' },
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value, index, values) {
+                                    return currencyTooltip(value);
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+
+    // --- Main Calculation Function ---
+    function calculateImpact() {
+        const income = parseFloat(document.getElementById('income').value);
+        const familySize = parseInt(document.getElementById('familySize').value);
+        const age = parseInt(document.getElementById('age').value);
+
+        const resultsDiv = document.getElementById('results');
+        const keyDataDiv = document.getElementById('key-data');
+
+        resultsDiv.innerHTML = '';
+        keyDataDiv.innerHTML = '';
+
+        if (isNaN(income) || isNaN(familySize) || isNaN(age) || income <= 0 || familySize <= 0 || age < 20 || age > 64) {
+            resultsDiv.innerHTML = '<p class="text-slate-600 text-lg">Please enter valid values for Income, Family Size (1-8), and Age (20-64).</p>';
+            return;
+        }
+        
+        // Individual Calculation Logic
+        const fplPercent = calculateFPLPercentage(income, familySize);
+        const annualBenchmarkPremium = getBenchmarkPremium(age);
+        const netPremium2025 = getAnnualRequiredContribution(income, fplPercent, annualBenchmarkPremium, PTC_RATES_2025, false);
+        const netPremium2026 = getAnnualRequiredContribution(income, fplPercent, annualBenchmarkPremium, PTC_RATES_2026, true);
+        const increase = netPremium2026 - netPremium2025;
+        
+        // --- Display Results ---
+
+        const fpl400_income = getFPL100(familySize) * 4;
+        
+        let impactMessage;
+        let impactClass = 'text-emerald-300 drop-shadow-[0_0_1.5rem_rgba(16,185,129,0.35)]';
+
+        if (increase > 1000) {
+            impactMessage = `Your estimated annual premium increase is (Severe Financial Shock):`;
+            impactClass = 'text-rose-300 drop-shadow-[0_0_1.5rem_rgba(244,114,182,0.35)]';
+        } else if (increase > 100) {
+            impactMessage = `Your estimated annual premium increase is (Moderate Impact):`;
+            impactClass = 'text-amber-300 drop-shadow-[0_0_1.5rem_rgba(251,191,36,0.35)]';
+        } else if (increase > 0) {
+            impactMessage = `Your estimated annual premium increase is (Minor Impact):`;
+            impactClass = 'text-orange-300 drop-shadow-[0_0_1.5rem_rgba(253,186,116,0.35)]';
+        } else {
+            impactMessage = "Your estimated annual premium change is:";
+        }
+
+        resultsDiv.innerHTML = `
+            <p class="text-lg font-semibold text-slate-100/90 mb-3">${impactMessage}</p>
+            <p class="text-5xl font-black tracking-tight ${impactClass}">${currencyFormatter.format(increase)}</p>
+            <p class="mt-4 text-xs text-slate-400">This estimate isolates the loss of the subsidy and assumes the benchmark premium remains constant. In reality, premiums are also expected to rise.</p>
+        `;
+
+        // --- Display Key Data ---
+        keyDataDiv.innerHTML = `
+            <div class="space-y-1">
+                <p><span class="font-bold">Household Income (MAGI):</span> ${currencyFormatter.format(income)}</p>
+                <p><span class="font-bold">400% FPL for ${familySize} people:</span> ${currencyFormatter.format(fpl400_income)}</p>
+                <p><span class="font-bold">Your FPL Percentage:</span> ${fplPercent.toFixed(1)}%</p>
+            </div>
+            <div class="space-y-1">
+                <p><span class="font-bold">Annual Benchmark Premium (Age ${age}):</span> ${currencyFormatter.format(annualBenchmarkPremium)}</p>
+                <p><span class="font-bold text-blue-600">Your Net Premium (2025, Enhanced PTC):</span> ${currencyFormatter.format(netPremium2025)}</p>
+                <p><span class="font-bold text-red-600">Your Net Premium (2026, Post-Cliff):</span> ${currencyFormatter.format(netPremium2026)}</p>
+            </div>
+        `;
+        
+        // --- Update Chart ---
+        updateChart(generateChartData());
+    }
+
+    // Run calculation and generate chart on load with default values
+    window.onload = calculateImpact;
+
+</script>
+
+</body>
+</html>
